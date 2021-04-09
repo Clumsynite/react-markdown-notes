@@ -9,7 +9,7 @@ const { Title } = Typography;
 export default function Heading({ onClick }) {
   return (
     <Row
-      className="shadow-sm p-3 mb-5 bg-body rounded"
+      className="shadow-sm p-3 bg-body rounded fixed"
       align="middle"
       justify="center"
     >

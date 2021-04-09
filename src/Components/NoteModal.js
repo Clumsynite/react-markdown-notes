@@ -14,7 +14,7 @@ const ModalTitle = ({ title, setTitle }) => {
 
   return (
     <Row align="middle">
-      <Col span={12}>
+      <Col span={14}>
         {edit ? (
           <input
             type="text"

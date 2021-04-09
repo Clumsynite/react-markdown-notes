@@ -1,3 +1,8 @@
+.App {
+  min-height: 100vh;
+  background-color: #d6dee1;
+}
+
 ::-webkit-scrollbar {
   width: 20px;
 }
