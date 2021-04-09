@@ -1,13 +1,65 @@
 import React, { useState } from "react";
-import { Modal, Row, Col, Switch } from "antd";
+import { Modal, Row, Col, Switch, message } from "antd";
 import { Icon } from "@iconify/react";
 import saveIcon from "@iconify-icons/carbon/save";
-import moment from "moment";
+import checkmarkOutline from "@iconify-icons/carbon/checkmark-outline";
+import editIcon from "@iconify-icons/carbon/edit";
 import ReactCardFlip from "react-card-flip";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
+import moment from "moment";
+
+const ModalTitle = ({ title, setTitle }) => {
+  const [edit, setEdit] = useState(true);
+
+  return (
+    <Row align="middle">
+      <Col span={12}>
+        {edit ? (
+          <input
+            type="text"
+            className="form-control"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        ) : (
+          `${title} - ${moment().fromNow()}`
+        )}
+      </Col>
+      <Col span={4} style={{ paddingLeft: 4 }}>
+        {edit ? (
+          <div
+            style={{ display: "contents", cursor: "pointer" }}
+            onClick={() => {
+              if (title.trim().length > 0) {
+                setEdit(false);
+              } else {
+                message.error("Can't set title empty");
+              }
+            }}
+          >
+            <Icon
+              icon={checkmarkOutline}
+              color="#bebebe"
+              height={38}
+              width={38}
+            />
+          </div>
+        ) : (
+          <div
+            style={{ display: "contents", cursor: "pointer" }}
+            onClick={() => setEdit(true)}
+          >
+            <Icon icon={editIcon} color="#bebebe" height={38} width={38} />
+          </div>
+        )}
+      </Col>
+    </Row>
+  );
+};
 
 export default function NoteModal({ visible, setVisible }) {
+  const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [view, setView] = useState(false);
 
@@ -25,21 +77,31 @@ export default function NoteModal({ visible, setVisible }) {
   };
 
   const onNoteSave = () => {
-    let notes = JSON.parse(localStorage.notes || "[]");
-    let currentNote = {
-      date: new Date(),
-      body: note,
-    };
-    let newNotes = [...notes, currentNote];
-    console.log("NOTES", newNotes);
-    // localStorage.setItem("notes", JSON.stringify(newNotes));
-    setNote("");
-    // setVisible(false);
+    if (title.trim().length < 1) {
+      message.error("Title Can't be empty");
+      return false;
+    } else if (note.trim().length < 1) {
+      message.error("Can't save empty note");
+      return false;
+    } else {
+      let notes = JSON.parse(localStorage.notes || "[]");
+      let currentNote = {
+        date: new Date(),
+        body: note,
+        title,
+      };
+      let newNotes = [...notes, currentNote];
+      localStorage.setItem("notes", JSON.stringify(newNotes));
+      setNote("");
+      setTitle("");
+      setVisible(false);
+      message.success("Note saved successfully");
+    }
   };
 
   return (
     <Modal
-      title={`Add New Note - ${moment().fromNow()}`}
+      title={<ModalTitle title={title} setTitle={setTitle} />}
       centered
       visible={visible}
       onCancel={() => {
@@ -79,7 +141,7 @@ export default function NoteModal({ visible, setVisible }) {
               onClick={onNoteSave}
               title="Save Note"
             >
-              <Icon icon={saveIcon} color="#000" width="50" height="50" />
+              <Icon icon={saveIcon} color="#bebebe" width="50" height="50" />
             </div>
           </Col>
         </Row>
