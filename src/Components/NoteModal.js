@@ -86,7 +86,7 @@ export default function NoteModal({ visible, setVisible }) {
     } else {
       let notes = JSON.parse(localStorage.notes || "[]");
       let currentNote = {
-        date: new Date(),
+        created: new Date(),
         body: note,
         title,
       };
