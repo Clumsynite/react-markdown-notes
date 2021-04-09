@@ -2,26 +2,24 @@ import React, { useState } from "react";
 import { Modal, Row, Col, Switch } from "antd";
 import moment from "moment";
 import ReactCardFlip from "react-card-flip";
-import ReactMarkdown from 'react-markdown'
-import gfm from 'remark-gfm'
+import ReactMarkdown from "react-markdown";
+import gfm from "remark-gfm";
 
 export default function NoteModal({ visible, setVisible }) {
   const [note, setNote] = useState("");
   const [view, setView] = useState(false);
 
-  const NoteInput = () => (
-    <textarea
-      className="form-control"
-      style={{ height: "40vh", resize: "none" }}
-      value={note}
-      onChange={(e) => setNote(e.target.value)}
-    />
-  );
+  const generalHeight = "50vh";
 
   const NoteView = () => {
-    return <div className="form-control" style={{ height: "40vh" }}>
-      <ReactMarkdown plugins={[gfm]} children={note} />
-    </div>;
+    return (
+      <div
+        className="form-control"
+        style={{ height: generalHeight, overflowY: "auto" }}
+      >
+        <ReactMarkdown plugins={[gfm]} children={note} />
+      </div>
+    );
   };
 
   return (
@@ -39,8 +37,15 @@ export default function NoteModal({ visible, setVisible }) {
     >
       <div>
         <ReactCardFlip isFlipped={view} flipDirection="horizontal">
+          <textarea
+            className="form-control"
+            style={{ height: generalHeight, resize: "none" }}
+            value={note}
+            onChange={(e) => {
+              setNote(e.target.value);
+            }}
+          />
           <NoteView />
-          <NoteInput />
         </ReactCardFlip>
         <Row style={{ paddingTop: 10 }} justify="end">
           {!view && <Col span={2}>View</Col>}
