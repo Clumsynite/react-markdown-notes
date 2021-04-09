@@ -2,12 +2,21 @@ import { Card } from "antd";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import moment from "moment";
+import { Icon } from "@iconify/react";
+import deleteIcon from "@iconify-icons/carbon/delete";
 
-export default function NoteCard({ note, index }) {
+export default function NoteCard({ note, index, deleteNote }) {
   const { created, body, title } = note;
 
   const DeleteNote = () => {
-    return <div style={{ display: "contents", cursor: "pointer" }}></div>;
+    return (
+      <div
+        style={{ display: "contents", cursor: "pointer" }}
+        onClick={() => deleteNote(index)}
+      >
+        <Icon icon={deleteIcon} color="#f00" width="30" height="30" />
+      </div>
+    );
   };
 
   return (

@@ -15,6 +15,15 @@ export default function App() {
     setNoteModal(true);
   };
 
+  const deleteNote = (index) => {
+    const notes = JSON.parse(localStorage.notes || "[]");
+    if (notes.length > 0) {
+      notes.splice(index, 1);
+      localStorage.setItem("notes", JSON.stringify(notes));
+      setNotes(notes);
+    }
+  };
+
   useEffect(() => {
     setNotes(JSON.parse(localStorage.notes || "[]"));
   }, [noteModal]);
@@ -32,7 +41,12 @@ export default function App() {
         }}
       >
         {notes.map((note, index) => (
-          <NoteCard key={index} note={note} index={index} />
+          <NoteCard
+            key={index}
+            note={note}
+            index={index}
+            deleteNote={deleteNote}
+          />
         ))}
       </div>
     </div>
