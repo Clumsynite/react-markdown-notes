@@ -25,15 +25,16 @@ export default function NoteModal({ visible, setVisible }) {
   };
 
   const onNoteSave = () => {
-    let notes = JSON.parse(localStorage.notes) || [];
+    let notes = JSON.parse(localStorage.notes || "[]");
     let currentNote = {
       date: new Date(),
       body: note,
     };
     let newNotes = [...notes, currentNote];
-    localStorage.notes = newNotes;
+    console.log("NOTES", newNotes);
+    // localStorage.setItem("notes", JSON.stringify(newNotes));
     setNote("");
-    setVisible(false);
+    // setVisible(false);
   };
 
   return (
@@ -42,7 +43,6 @@ export default function NoteModal({ visible, setVisible }) {
       centered
       visible={visible}
       onCancel={() => {
-        console.log("Modal Cancelled");
         setVisible(false);
       }}
       footer={null}
