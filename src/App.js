@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import Heading from "./Components/Heading";
 import NoteModal from "./Components/NoteModal";
 
+import './App.css'
+
 export default function App() {
   const [noteModal, setNoteModal] = useState(false);
 
