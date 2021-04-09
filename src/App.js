@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Heading from "./Components/Heading";
 import NoteModal from "./Components/NoteModal";
 
-import './App.css'
+import "./App.css";
 
 export default function App() {
   const [noteModal, setNoteModal] = useState(false);
@@ -16,7 +16,7 @@ export default function App() {
   return (
     <div className="App">
       <Heading onClick={onNewNoteClicked} />
-      <NoteModal visible={noteModal} setVisible={setNoteModal} />
+      {noteModal && <NoteModal visible={noteModal} setVisible={setNoteModal} />}
     </div>
   );
 }

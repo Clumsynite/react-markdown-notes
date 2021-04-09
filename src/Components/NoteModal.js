@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Row, Col, Switch } from "antd";
+import { Icon } from "@iconify/react";
+import saveIcon from "@iconify-icons/carbon/save";
 import moment from "moment";
 import ReactCardFlip from "react-card-flip";
 import ReactMarkdown from "react-markdown";
@@ -22,12 +24,23 @@ export default function NoteModal({ visible, setVisible }) {
     );
   };
 
+  const onNoteSave = () => {
+    let notes = JSON.parse(localStorage.notes) || [];
+    let currentNote = {
+      date: new Date(),
+      body: note,
+    };
+    let newNotes = [...notes, currentNote];
+    localStorage.notes = newNotes;
+    setNote("");
+    setVisible(false);
+  };
+
   return (
     <Modal
       title={`Add New Note - ${moment().fromNow()}`}
       centered
       visible={visible}
-      onOk={() => console.log("OK Clicked inside Modal")}
       onCancel={() => {
         console.log("Modal Cancelled");
         setVisible(false);
@@ -47,14 +60,27 @@ export default function NoteModal({ visible, setVisible }) {
           />
           <NoteView />
         </ReactCardFlip>
-        <Row style={{ paddingTop: 10 }} justify="end">
-          {!view && <Col span={2}>View</Col>}
-          <Col span={2}>
+        <Row style={{ paddingTop: 10 }} align="middle">
+          {!view && (
+            <Col offset={8} span={2} style={{ textAlign: "center" }}>
+              View
+            </Col>
+          )}
+          <Col offset={view ? 10 : 0} span={2}>
             <Switch
               checkedChildren={"View"}
               checked={view}
               onChange={setView}
             />
+          </Col>
+          <Col offset={6} span={6} style={{ textAlign: "right" }}>
+            <div
+              style={{ cursor: "pointer", display: "contents" }}
+              onClick={onNoteSave}
+              title="Save Note"
+            >
+              <Icon icon={saveIcon} color="#000" width="50" height="50" />
+            </div>
           </Col>
         </Row>
       </div>
