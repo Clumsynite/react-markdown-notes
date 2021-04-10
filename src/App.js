@@ -31,7 +31,7 @@ export default function App() {
   return (
     <div className="App">
       <Heading onClick={onNewNoteClicked} />
-      <NoteModal visible={noteModal} setVisible={setNoteModal} />
+      {noteModal && <NoteModal visible={noteModal} setVisible={setNoteModal} />}
       <div
         style={{
           display: "flex",
