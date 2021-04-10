@@ -8,6 +8,7 @@ import ReactCardFlip from "react-card-flip";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import moment from "moment";
+import { CompactPicker } from "react-color";
 
 const ModalTitle = ({ title, setTitle }) => {
   const [edit, setEdit] = useState(true);
@@ -62,6 +63,7 @@ export default function NoteModal({ visible, setVisible }) {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [view, setView] = useState(false);
+  const [color, setColor] = useState("#fff");
 
   const generalHeight = "50vh";
 
@@ -69,7 +71,11 @@ export default function NoteModal({ visible, setVisible }) {
     return (
       <div
         className="form-control"
-        style={{ height: generalHeight, overflowY: "auto" }}
+        style={{
+          height: generalHeight,
+          overflowY: "auto",
+          backgroundColor: color,
+        }}
       >
         <ReactMarkdown plugins={[gfm]} children={note} />
       </div>
@@ -89,6 +95,7 @@ export default function NoteModal({ visible, setVisible }) {
         created: new Date(),
         body: note,
         title,
+        backgroundColor: color,
       };
       let newNotes = [...notes, currentNote];
       localStorage.setItem("notes", JSON.stringify(newNotes));
@@ -114,7 +121,11 @@ export default function NoteModal({ visible, setVisible }) {
         <ReactCardFlip isFlipped={view} flipDirection="horizontal">
           <textarea
             className="form-control"
-            style={{ height: generalHeight, resize: "none" }}
+            style={{
+              height: generalHeight,
+              resize: "none",
+              backgroundColor: color,
+            }}
             value={note}
             onChange={(e) => {
               setNote(e.target.value);
@@ -123,19 +134,25 @@ export default function NoteModal({ visible, setVisible }) {
           <NoteView />
         </ReactCardFlip>
         <Row style={{ paddingTop: 10 }} align="middle">
+          <Col span={10}>
+            <CompactPicker
+              color={color}
+              onChangeComplete={(color) => setColor(color.hex)}
+            />
+          </Col>
           {!view && (
-            <Col offset={8} span={2} style={{ textAlign: "center" }}>
+            <Col offset={4} span={2}>
               View
             </Col>
           )}
-          <Col offset={view ? 10 : 0} span={2}>
+          <Col offset={view ? 6 : 0} span={2}>
             <Switch
               checkedChildren={"View"}
               checked={view}
               onChange={setView}
             />
           </Col>
-          <Col offset={6} span={6} style={{ textAlign: "right" }}>
+          <Col span={6} style={{ textAlign: "right" }}>
             <div
               style={{ cursor: "pointer", display: "contents" }}
               onClick={onNoteSave}
