@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/react-markdown-notes/static/css/main.64c7c7db.chunk.css",
+    "main.js": "/react-markdown-notes/static/js/main.276d384f.chunk.js",
+    "main.js.map": "/react-markdown-notes/static/js/main.276d384f.chunk.js.map",
+    "runtime-main.js": "/react-markdown-notes/static/js/runtime-main.b69e3a9f.js",
+    "runtime-main.js.map": "/react-markdown-notes/static/js/runtime-main.b69e3a9f.js.map",
+    "static/css/2.26ca8a35.chunk.css": "/react-markdown-notes/static/css/2.26ca8a35.chunk.css",
+    "static/js/2.60bbed3b.chunk.js": "/react-markdown-notes/static/js/2.60bbed3b.chunk.js",
+    "static/js/2.60bbed3b.chunk.js.map": "/react-markdown-notes/static/js/2.60bbed3b.chunk.js.map",
+    "index.html": "/react-markdown-notes/index.html",
+    "static/css/2.26ca8a35.chunk.css.map": "/react-markdown-notes/static/css/2.26ca8a35.chunk.css.map",
+    "static/css/main.64c7c7db.chunk.css.map": "/react-markdown-notes/static/css/main.64c7c7db.chunk.css.map",
+    "static/js/2.60bbed3b.chunk.js.LICENSE.txt": "/react-markdown-notes/static/js/2.60bbed3b.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.b69e3a9f.js",
+    "static/css/2.26ca8a35.chunk.css",
+    "static/js/2.60bbed3b.chunk.js",
+    "static/css/main.64c7c7db.chunk.css",
+    "static/js/main.276d384f.chunk.js"
+  ]
+}
