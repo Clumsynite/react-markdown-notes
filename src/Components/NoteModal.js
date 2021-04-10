@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { Modal, Row, Col, Switch, message } from "antd";
-import { Icon } from "@iconify/react";
-import saveIcon from "@iconify-icons/carbon/save";
-import checkmarkOutline from "@iconify-icons/carbon/checkmark-outline";
-import editIcon from "@iconify-icons/carbon/edit";
+import { Modal, Row, Col, Switch, message, Popover } from "antd";
+
 import ReactCardFlip from "react-card-flip";
 import ReactMarkdown from "react-markdown";
 import gfm from "remark-gfm";
 import moment from "moment";
 import { CompactPicker } from "react-color";
+
+import { Icon } from "@iconify/react";
+import saveIcon from "@iconify-icons/carbon/save";
+import checkmarkOutline from "@iconify-icons/carbon/checkmark-outline";
+import editIcon from "@iconify-icons/carbon/edit";
+import colorPalette from "@iconify-icons/carbon/color-palette";
 
 const ModalTitle = ({ title, setTitle }) => {
   const [edit, setEdit] = useState(true);
@@ -63,7 +66,7 @@ export default function NoteModal({ visible, setVisible }) {
   const [title, setTitle] = useState("");
   const [note, setNote] = useState("");
   const [view, setView] = useState(false);
-  const [color, setColor] = useState("#fff");
+  const [backgroundColor, setBackgroundColor] = useState("#fff");
 
   const generalHeight = "50vh";
 
@@ -74,7 +77,7 @@ export default function NoteModal({ visible, setVisible }) {
         style={{
           height: generalHeight,
           overflowY: "auto",
-          backgroundColor: color,
+          backgroundColor,
         }}
       >
         <ReactMarkdown plugins={[gfm]} children={note} />
@@ -95,7 +98,7 @@ export default function NoteModal({ visible, setVisible }) {
         created: new Date(),
         body: note,
         title,
-        backgroundColor: color,
+        backgroundColor,
       };
       let newNotes = [...notes, currentNote];
       localStorage.setItem("notes", JSON.stringify(newNotes));
@@ -124,7 +127,7 @@ export default function NoteModal({ visible, setVisible }) {
             style={{
               height: generalHeight,
               resize: "none",
-              backgroundColor: color,
+              backgroundColor,
             }}
             value={note}
             onChange={(e) => {
@@ -134,25 +137,40 @@ export default function NoteModal({ visible, setVisible }) {
           <NoteView />
         </ReactCardFlip>
         <Row style={{ paddingTop: 10 }} align="middle">
-          <Col span={10}>
-            <CompactPicker
-              color={color}
-              onChangeComplete={(color) => setColor(color.hex)}
-            />
+          <Col span={2} style={{ textAlign: "center" }}>
+            <div title="Select Background Color">
+              <Popover
+                title="Select Background Color"
+                trigger="click"
+                content={
+                  <CompactPicker
+                    color={backgroundColor}
+                    onChangeComplete={(color) => setBackgroundColor(color.hex)}
+                  />
+                }
+              >
+                <Icon
+                  icon={colorPalette}
+                  color="#bebebe"
+                  width="36"
+                  height="36"
+                />
+              </Popover>
+            </div>
           </Col>
           {!view && (
-            <Col offset={4} span={2}>
+            <Col offset={6} span={2}>
               View
             </Col>
           )}
-          <Col offset={view ? 6 : 0} span={2}>
+          <Col offset={view ? 8 : 0} span={4}>
             <Switch
               checkedChildren={"View"}
               checked={view}
               onChange={setView}
             />
           </Col>
-          <Col span={6} style={{ textAlign: "right" }}>
+          <Col span={10} style={{ textAlign: "right" }}>
             <div
               style={{ cursor: "pointer", display: "contents" }}
               onClick={onNoteSave}
